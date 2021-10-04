@@ -179,7 +179,8 @@ modifier isOwner(address _address) {
     items[sku].seller.transfer(items[sku].price);
     items[sku].state = State.Sold;
 
-    emit LogSold(sku);
+
+    emit LogSold(skuCount);
   }
 
   // 1. Add modifiers to check:
@@ -192,8 +193,7 @@ modifier isOwner(address _address) {
   verifyCaller(items[sku].seller)
   {
     items[sku].state = State.Shipped;
-    emit LogShipped(sku);
-
+    emit LogShipped(skuCount);
   }
 
   // 1. Add modifiers to check 
@@ -207,18 +207,18 @@ modifier isOwner(address _address) {
   {
     items[sku].state = State.Received;
 
-    emit LogReceived(sku);
+    emit LogReceived(skuCount);
   }
 
   // Uncomment the following code block. it is needed to run tests
-  // function fetchItem(uint sku) public view returns (string memory name, uint sku, uint price, uint state, address seller, address buyer)
-  // { 
-  // name = items[sku].name; 
-  // sku = items[sku].sku; 
-  // price = items[sku].price; 
-  // state = uint(items[sku].state); 
-  // seller = items[sku].seller; 
-  // buyer = items[sku].buyer; 
-  // return (name, sku, price, state, seller, buyer); 
-  // }
+  function fetchItem(uint sku) public view returns (string memory name, uint _sku, uint price, uint state, address payable seller, address payable buyer)
+  { 
+  name = items[sku].name; 
+  sku = items[sku].sku; 
+  price = items[sku].price; 
+  state = uint(items[sku].state); 
+  seller = items[sku].seller; 
+  buyer = items[sku].buyer; 
+  return (name, _sku, price, state, seller, buyer); 
+  }
 }
